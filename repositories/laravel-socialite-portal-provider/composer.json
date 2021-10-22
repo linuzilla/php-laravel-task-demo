@@ -1,0 +1,19 @@
+{
+    "name": "ncucc/portal-oauth2-provider",
+    "description": "NCU Portal OAuth2 Provider for Laravel Socialite",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jiann-Ching Liu",
+            "email": "center5@g.ncu.edu.tw"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Ncucc\\Portal\\": "src/" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "minimum-stability": "dev"
+}
