@@ -7,7 +7,6 @@ use App\Forms\ApplicationForm;
 use App\Helpers\BeanHelper;
 use App\Helpers\SecurityContextHolder;
 use App\Models\SleepingBeautyOutput;
-use App\Models\TaskCommandArgs;
 use App\Models\TaskStatusResponse;
 use App\Tasks\SleepingBeautyTask;
 use Illuminate\Http\Request;
@@ -16,8 +15,7 @@ class TaskRunningService {
     const USER_TASK_PREFIX = "user-task::";
     const TASK_ID_PREFIX = "task-id::";
     const TASK_RESULT_PREFIX = "task-result::";
-//    const COMMAND_PATH = '/project/task-demo/bin/runtask.sh';
-    const COMMAND_PATH = '/usr/local/libexec/worker/setuid-worker';
+    const COMMAND_PATH = '/project/task-demo/bin/runtask.sh';
 
     public static function runningStatus(): TaskStatusResponse {
         if (RedisService::exists(self::taskRedisKey())) {
@@ -39,11 +37,6 @@ class TaskRunningService {
     }
 
     public static function taskTryAndRun(Request $request, ApplicationForm $form): bool {
-//        // echo system(sprintf("%s %s %s", self::COMMAND_PATH, SecurityContextHolder::name(), "abc"));
-//        echo '<pre>';
-//        echo system(sprintf("%s %s", self::COMMAND_PATH, 'whoami'));
-//        echo '</pre>';
-//        return false;
         if (RedisService::atomic(self::taskRedisKey(), 1, 86400)) {
             $taskId = uniqid();
             $request->session()->put(SessionVariables::TASK_ID, $taskId);
@@ -60,7 +53,6 @@ class TaskRunningService {
     }
 
     public static function runViaCommandLine(string $user, string $taskId) {
-//        printf("run command for %s, task: %s", $user, $taskId);
         if (($jsonString = RedisService::retrieve(self::redisTaskIdKey($taskId, $user))) !== false) {
             /** @var ApplicationForm $form */
             $form = (new BeanHelper(new ApplicationForm()))->updateBean(json_decode($jsonString, true));

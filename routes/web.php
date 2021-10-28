@@ -25,8 +25,6 @@ Route::get('dashboard', fn() => view('dashboard'))->middleware('auth');
 
 Route::get('welcome', fn() => view('welcome'));
 
-Route::get('bootswatch', fn() => view('bootswatch'));
-
 Route::middleware(['auth'])->group(function () {
     Route::get('form', fn() => view('form'));
     Route::get('form/application', [ApplicationFormController::class, 'show'])->name('application.show');
