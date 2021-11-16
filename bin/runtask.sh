@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd /project/task-demo
+cd $1
+shift
 
 if [ "$1" = "" ]; then
     echo usage runtask.sh taskid

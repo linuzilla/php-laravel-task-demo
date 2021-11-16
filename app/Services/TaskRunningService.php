@@ -15,7 +15,7 @@ class TaskRunningService {
     const USER_TASK_PREFIX = "user-task::";
     const TASK_ID_PREFIX = "task-id::";
     const TASK_RESULT_PREFIX = "task-result::";
-    const COMMAND_PATH = '/project/task-demo/bin/runtask.sh';
+    const COMMAND_PATH = 'bin/runtask.sh';
 
     public static function runningStatus(): TaskStatusResponse {
         if (RedisService::exists(self::taskRedisKey())) {
@@ -43,7 +43,7 @@ class TaskRunningService {
 
             RedisService::store(self::redisTaskIdKey($taskId, SecurityContextHolder::name()), json_encode($form), 1800);
 
-            system(sprintf("%s %s %s", self::COMMAND_PATH, SecurityContextHolder::name(), $taskId));
+            system(sprintf("%s %s %s %s", base_path(self::COMMAND_PATH), base_path(), SecurityContextHolder::name(), $taskId));
         }
         return false;
     }

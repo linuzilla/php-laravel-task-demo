@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use JetBrains\PhpStorm\Pure;
-
 class SleepingBeautyOutput {
     public string $status;
     public int $code;
@@ -19,7 +17,7 @@ class SleepingBeautyOutput {
      * @param string $embedded
      * @return SleepingBeautyOutput
      */
-    #[Pure] public static function success(string $contentType, string $embedded): SleepingBeautyOutput {
+    public static function success(string $contentType, string $embedded): SleepingBeautyOutput {
         $output = new SleepingBeautyOutput();
         $output->contentType = $contentType;
         $output->embedded = $embedded;
@@ -34,7 +32,7 @@ class SleepingBeautyOutput {
      * @param string $message
      * @return SleepingBeautyOutput
      */
-    #[Pure] public static function error(int $code, string $message): SleepingBeautyOutput {
+    public static function error(int $code, string $message): SleepingBeautyOutput {
         $output = new SleepingBeautyOutput();
         $output->code = $code;
         $output->message = $message;
